@@ -153,75 +153,25 @@ apps = {
 }
 
 installed_apps = []
-users = {}  
-app = "💬 available commands: echo, say-hi, compliment, app-store, la install, device-info, register, login"
+app = "💬 available commands: echo, say-hi, compliment, app-store, la install, device-info"
 app_store = "🔧 Available apps in store: " + ", ".join(apps.keys())
-
-try:
-    with open('users.txt', 'r') as f:
-        for line in f:
-            if ':' in line:
-                username, password = line.strip().split(':', 1)
-                users[username] = password
-except FileNotFoundError:
-    pass
-
-def save_users():
-    with open('users.txt', 'w') as f:
-        for username, password in users.items():
-            f.write(f"{username}:{password}\n")
-
-def register_user():
-    username = input("Enter new username > ")
-    if username in users:
-        print("❌ Username already exists!")
-        return None
-    password = input("Enter password > ")
-    users[username] = password
-    save_users()
-    print(f"✅ User {username} registered successfully!")
-    return username
-
 
 print("loading...")
 time.sleep(3)
-print("NEWS: 🧑‍💻 LaTerminalle has been updated to version 2.0!")
 print("Welcome to 🧑‍💻  LaTerminalle! Made by Ufan")
 y = input("Do you want to install MegaTerminal by Ufan? (y/n) > ")
 
 if y == "y":
     print("Installing 🧑‍💻 LaTerminalle...")
     time.sleep(4)
-    
-    choice = input("Do you have an account? (login/register/local) > ").lower()
-    if choice == "register":
-        x = register_user()
-
-        if x is None:
-            x = input("Please enter a guest username > ")
-            
-    elif choice == "login":
-        x = login_user()
-        if x is None:
-            x = input("Please enter a guest username > ")
-            
-    elif choice == "local":
-        x = input("Please enter a guest username > ")
-        
-    else:
-        x = input("Please enter your username > ")
-    
-    print("Now optimizing your experience, " + x)
-    time.sleep(2)
-    print("Installing apps...")
-    time.sleep(3)
+    x = input("Please enter your username > ")
     print("LaTerminalle has been installed")
     print("Hint: type help for available commands")
     print("")
     time.sleep(2)
 
 while True:
-    m = input("$"+ x + " > ")
+    m = input("#" + "root" + "@" + x + " >> ")
 
     if m == "clear":
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -265,19 +215,8 @@ while True:
         exec(apps[m])
 
     elif m == "device-info":
-        print("🧑‍💻 LaTerminalle\nVersion: 2.0.0\nAvailable commands: " + app)
+        print("🧑‍💻 LaTerminalle\nVersion: 1.0.0\nAvailable commands: " + app)
         print("Installed apps: " + ", ".join(installed_apps))
-
-    elif m == "register":
-        new_user = register_user()
-        if new_user:
-            print("You can now login with your new account!")
-
-    elif m == "login":
-        logged_user = login_user()
-        if logged_user:
-            x = logged_user
-            print(f"Logged in as {x}")
 
     else:
         print(m + " not found")
